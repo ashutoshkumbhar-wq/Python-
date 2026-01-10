@@ -6,6 +6,7 @@ class BankAccount:
     def withdraw(self, amount):
         if amount > self.balance:
             print("Insufficient balance")
+            return  # Exit the method if insufficient balance
         self.balance -= amount   
 
     def deposit(self, amount):
@@ -13,6 +14,9 @@ class BankAccount:
 
 
 def transfer_money(sender, receiver, amount):
+    if sender is None or receiver is None:
+        print("Transfer failed: Invalid sender or receiver.")
+        return
     sender.withdraw(amount)
     receiver.deposit(amount)
 
@@ -33,8 +37,17 @@ def get_account(name):
 sender = get_account("Alice")
 receiver = get_account("Charlie")  
 
-transfer_money(sender, receiver, 7000)  
+# Check if receiver is valid before attempting to transfer money
+if receiver is not None:
+    transfer_money(sender, receiver, 7000)  
+else:
+    print("Transfer failed: Receiver account not found.")
 
 print("Transfer complete")
 print("Sender balance:", sender.balance)
-print("Receiver balance:", receiver.balance)
+if receiver is not None:
+    print("Receiver balance:", receiver.balance)
+else:
+    print("Receiver account not found.")
+
+# CodeSentinal: created for you by RuchirAdnaik.
